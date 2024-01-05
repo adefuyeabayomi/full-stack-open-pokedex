@@ -45,6 +45,11 @@ jobs:
       steps: 
       - name : Say Hello
         run : echo "Hello Tag Release."
+      - name: Commit Message
+        env:
+          COMMIT_MESSAGE: ${{ toJson(github.event.commits.*.message )}}
+        run: echo "$COMMIT_MESSAGE" 
+          
       - name : Checkout Repo
         uses: actions/checkout@v3
       - name : Bump version and push tag
