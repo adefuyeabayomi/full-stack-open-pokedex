@@ -28,7 +28,7 @@ jobs:
             - name: Check Github Head Ref
               run: echo ${{github.event_name}} ${{github.ref_name}}
     TriggerDeploy : 
-      if: (github.head_ref == 'master')
+      if: ( github.ref_name == 'master' && github.event_name == 'push')
       needs: [Simple-Deployment-Pipeline]
       name: Deploy to Render
       runs-on: ubuntu-latest
