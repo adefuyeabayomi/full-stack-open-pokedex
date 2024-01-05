@@ -25,6 +25,8 @@ jobs:
               run: npm run test
             - name: Build the application
               run: npm run build
+            - name: Check Github Head Ref
+              run: echo ${{github.head_ref}} ${{github.action}} ${{github}}
     TriggerDeploy : 
       if: (github.head_ref == 'master')
       needs: [Simple-Deployment-Pipeline]
