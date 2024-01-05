@@ -47,7 +47,7 @@ jobs:
         run : echo "Hello Tag Release."
       - name: Commit Message
         env:
-          COMMIT_MESSAGE: ${{ toJson(github.event.commits.*.message )}}
+          COMMIT_MESSAGE: ${{ toJson(github.event.commits.*.message )[0]}}
         run: echo "$COMMIT_MESSAGE" 
           
       - name : Checkout Repo
