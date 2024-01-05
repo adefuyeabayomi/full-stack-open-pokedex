@@ -26,7 +26,8 @@ jobs:
             - name: Build the application
               run: npm run build
             - name: Check Github Head Ref
-              run: echo ${{github.event_name}} ${{github.ref_name}}
+              run: echo ${{github.event_name}} ${{github.ref_name}} && ${{!contains(github.event.head_commit.message, 'build')}}
+              
     TriggerDeploy : 
       if: ( github.ref_name == 'master' && github.event_name == 'push')
       needs: [Simple-Deployment-Pipeline]
@@ -45,10 +46,6 @@ jobs:
       steps: 
       - name : Say Hello
         run : echo "Hello Tag Release."
-      - name: Commit Message
-        env:
-          COMMIT_MESSAGE: ${{ toJson(github.event.commits.*.message )[0]}}
-        run: echo "$COMMIT_MESSAGE" 
           
       - name : Checkout Repo
         uses: actions/checkout@v3
