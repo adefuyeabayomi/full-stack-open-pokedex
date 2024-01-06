@@ -61,8 +61,8 @@ jobs:
       runs-on: ubuntu-latest
       steps:  
         - name: Test Success
-          uses: rjstone/discord-webhook-notify@v1
           if: success()
+          uses: rjstone/discord-webhook-notify@v1
           with:
             severity: info
             details: Test Succeeded!
@@ -72,8 +72,8 @@ jobs:
       runs-on: ubuntu-latest
       steps:  
         - name: Test Failure
-          uses: rjstone/discord-webhook-notify@v1
           if: failure()
+          uses: rjstone/discord-webhook-notify@v1
           with:
             severity: error
             details: Test Failed!
@@ -83,8 +83,8 @@ jobs:
       runs-on: ubuntu-latest
       steps:  
       - name: Test Cancelled
-        uses: rjstone/discord-webhook-notify@v1
         if: cancelled()
+        uses: rjstone/discord-webhook-notify@v1
         with:
           severity: warn
           details: Test Cancelled!
