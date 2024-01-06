@@ -57,8 +57,8 @@ jobs:
           WITH_V: true
           DEFAULT_BUMP: none
 
-    NotifyStakeHoldersSuccess: 
-      needs: [TagRelease]
+    NotifyStakeHoldersSuccess:
+      needs: [Simple-Deployment-Pipeline]
       runs-on: ubuntu-latest
       steps:  
         - name: Test Success
@@ -68,4 +68,29 @@ jobs:
             severity: info
             details: Test Succeeded!
             webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+        
+    NotifyStakeHoldersFailure:
+      needs: [Simple-Deployment-Pipeline]
+      runs-on: ubuntu-latest
+      steps:  
+        - name: Test Failure
+          if: failure()
+          uses: rjstone/discord-webhook-notify@v1
+          with:
+            severity: error
+            details: Test Failed!
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+        
+    NotifyStakeHoldersCancelled:
+      needs: [Simple-Deployment-Pipeline]
+      runs-on: ubuntu-latest
+      steps:  
+      - name: Test Cancelled
+        if: cancelled()
+        uses: rjstone/discord-webhook-notify@v1
+        with:
+          severity: warn
+          details: Test Cancelled!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+        
 
