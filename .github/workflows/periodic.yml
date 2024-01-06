@@ -1,9 +1,8 @@
 name : Periodic
 
 on : 
-    push: 
-        branches: 
-            - master 
+    schedule:
+        -   cron: '20,25,30 10 * * *' 
 
 jobs: 
     PingServer : 
