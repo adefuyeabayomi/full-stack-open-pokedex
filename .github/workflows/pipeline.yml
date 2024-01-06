@@ -36,6 +36,7 @@ jobs:
       steps:
         - name: Trigger deployment
           run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
+          
     TagRelease : 
       if: ( github.ref_name == 'master' && github.event_name == 'push')
       needs: [Simple-Deployment-Pipeline]
@@ -55,5 +56,38 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
           DEFAULT_BUMP: none
+
+    NotifyStakeHoldersSuccess: 
+      runs-on: ubuntu-latest
+      steps:  
+        - name: Test Success
+          uses: rjstone/discord-webhook-notify@v1
+          if: success()
+          with:
+            severity: info
+            details: Test Succeeded!
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+        
+    NotifyStakeHoldersFailure:
+      runs-on: ubuntu-latest
+      steps:  
+        - name: Test Failure
+          uses: rjstone/discord-webhook-notify@v1
+          if: failure()
+          with:
+            severity: error
+            details: Test Failed!
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+        
+    NotifyStakeHoldersCancelled:
+      runs-on: ubuntu-latest
+      steps:  
+      - name: Test Cancelled
+        uses: rjstone/discord-webhook-notify@v1
+        if: cancelled()
+        with:
+          severity: warn
+          details: Test Cancelled!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
         
 
