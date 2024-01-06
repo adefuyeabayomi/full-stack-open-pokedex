@@ -1,0 +1,39 @@
+name : Periodic
+
+on : 
+    push: 
+        branches: 
+            - master 
+
+jobs: 
+    PingServer : 
+        runs-on : ubuntu-latest
+        steps: 
+            -   name: ping-app-server
+                uses: jtalk/url-health-check-action@v3
+                with: 
+                    url: https://fullstack-pokedex-adefuyeabayomi.onrender.com/pingggg/
+                    max-attempts : 2
+    NotifyPingSuccess: 
+        needs: [PingServer]
+        runs-on: ubuntu-latest
+        steps: 
+            -   name: Ping Success
+                if: success()
+                uses: rjstone/discord-webhook-notify@v1
+                with: 
+                    severity: info
+                    details: Ping Succeded. Server Address - https://fullstack-pokedex-adefuyeabayomi.onrender.com/pingggg/ 
+                    webhookUrl :  ${{ secrets.DISCORD_WEBHOOK }}
+    NotifyPingFailure: 
+        needs: [PingServer]
+        runs-on: ubuntu-latest
+        steps: 
+            -   name: Ping Success
+                if: failure()
+                uses: rjstone/discord-webhook-notify@v1
+                with: 
+                    severity: info
+                    details: Ping Failed, Server offline. Server Address - https://fullstack-pokedex-adefuyeabayomi.onrender.com/pingggg/ 
+                    webhookUrl :  ${{ secrets.DISCORD_WEBHOOK }}
+
