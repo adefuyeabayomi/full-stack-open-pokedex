@@ -2,7 +2,7 @@ name : Periodic
 
 on : 
     schedule:
-        -   cron: '20,25,30 10 * * *' 
+        -   cron: '25 10 * * *' 
 
 jobs: 
     PingServer : 
