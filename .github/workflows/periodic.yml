@@ -2,7 +2,7 @@ name : Periodic
 
 on : 
     schedule:
-        -   cron: '25 10 * * *' 
+        -   cron: '30 10 * * *' 
 
 jobs: 
     PingServer : 
@@ -11,7 +11,7 @@ jobs:
             -   name: ping-app-server
                 uses: jtalk/url-health-check-action@v3
                 with: 
-                    url: https://fullstack-pokedex-adefuyeabayomi.onrender.com/pinggg/
+                    url: https://fullstack-pokedex-adefuyeabayomi.onrender.com/ping/
                     max-attempts : 2
             -   name: notifySuccess
                 if: success()
