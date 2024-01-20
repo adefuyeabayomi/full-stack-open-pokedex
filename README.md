@@ -1,3 +1,7 @@
+## Link to my last exercise github repo
+
+https://github.com/adefuyeabayomi/CI-CD-Bloglist-App
+
 # Full Stack open CI/CD
 
 This repository is used for the CI/CD module of the Full stack open course
